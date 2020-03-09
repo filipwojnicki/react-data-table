@@ -22,7 +22,7 @@ export default function App() {
     <div className="App">
       <Api setIsLoading={setIsLoading} setCompanies={setCompanies} />
       {isLoading ? (<h1>Loading...</h1>) : (
-        <div>
+        <div className="container">
           <input name="search" type="text" value={value} onChange={e => {setValue(e.target.value); tableRef.current.filterCompanies(e);}} placeholder="Filter the result" />
           {companies.hasOwnProperty('timestamp') ? <span>Last time data updated: {new Date(companies.timestamp).toUTCString()}</span> : ''}
           {companies.hasOwnProperty('value') ? <Table companies={companies.value} ref={tableRef} /> : 'No data'}
