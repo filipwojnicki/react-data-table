@@ -3,6 +3,8 @@ Components are in src/components folder.<br />
 Api class are in src/class folder. <br />
 Main component and wrapper for whole project is src/index.js. <br />
 
+Before run make sure thats you install all packages. To install i used yarn.
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
