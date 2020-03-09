@@ -6,7 +6,7 @@ export default class Api {
   }
 
   /**
-   * Get companies list from api. Check session storage for data, thats not longer than 10 minutes.
+   * Get companies list from api.
    */
   async getCompanies() {
     try{
