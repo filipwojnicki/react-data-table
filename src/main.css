@@ -17,6 +17,31 @@ code {
   overflow-x:auto;
 }
 
+ul.pagination {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333333;
+}
+
+li {
+  float: left;
+  display: block;
+  color: #ffffff;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+
+li:hover{
+  cursor: pointer;
+}
+
+.active {
+  color: #888888;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

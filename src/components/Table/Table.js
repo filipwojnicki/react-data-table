@@ -15,6 +15,9 @@ const Table = forwardRef((params, ref) => {
   });
 
   const [companiesFiltered, setCompaniesFiltered] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageLimit, setPageLimit] = useState(20);
+  const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
     if (params.companies.length) {
@@ -24,6 +27,10 @@ const Table = forwardRef((params, ref) => {
       setCompaniesFiltered(companiesParams);
     }
   }, [params.companies]);
+
+  useEffect(() => {
+    setPageCount(Math.ceil(companiesFiltered.length / pageLimit));
+  }, [companiesFiltered])
 
   useImperativeHandle(ref, () => ({
 
@@ -55,9 +62,25 @@ const Table = forwardRef((params, ref) => {
           return company;
         }
       }));
+
+      setPage(1);
     }
 
   }));
+
+  const paginate  = (array) => {
+    return array.slice((page - 1) * pageLimit, page * pageLimit);
+  }
+
+  const generatePagination = () => {
+    let paginateObj = [];
+
+    for(let i = 1; i <= pageCount; i++) {
+      paginateObj.push(<li key={i} className={(i === page) ? 'active' : ''} onClick={() => setPage(i)}>{i}</li>)
+    }
+
+    return paginateObj;
+  }
 
   const generateTable = (company, id) => {
     return (
@@ -102,25 +125,29 @@ const Table = forwardRef((params, ref) => {
       });
     }
 
+    setPage(1);
     setClickCounterObj({...clickCounterObj, [keyName]: clickCounterObj[keyName] + 1 });
   }
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th onClick={() => filterHandler('id')}>Id</th>
-          <th onClick={() => filterHandler('name')}>Name</th>
-          <th onClick={() => filterHandler('city')}>City</th>
-          <th onClick={() => filterHandler('total')}>Total Income</th>
-          <th onClick={() => filterHandler('avg')}>Averge Income</th>
-          <th onClick={() => filterHandler('lastmonth')}>Last Month Income</th>
-        </tr>
-      </thead>
-      <tbody>
-        {companiesFiltered.map(generateTable)}
-      </tbody>
-    </table>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th onClick={() => filterHandler('id')}>Id</th>
+            <th onClick={() => filterHandler('name')}>Name</th>
+            <th onClick={() => filterHandler('city')}>City</th>
+            <th onClick={() => filterHandler('total')}>Total Income</th>
+            <th onClick={() => filterHandler('avg')}>Averge Income</th>
+            <th onClick={() => filterHandler('lastmonth')}>Last Month Income</th>
+          </tr>
+        </thead>
+        <tbody>
+          {paginate(companiesFiltered).map(generateTable)}
+        </tbody>
+      </table>
+      {pageCount > 1 ? <ul className="pagination"> {generatePagination()} </ul> : null}
+    </div>
   );
 });
 
