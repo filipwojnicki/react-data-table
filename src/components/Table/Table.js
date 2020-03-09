@@ -1,5 +1,8 @@
 import React, { forwardRef, useEffect, useState, useImperativeHandle } from 'react'
 
+/**
+ * Table component that hold a table action, generating rows, filter and sort.
+ */
 const Table = forwardRef((params, ref) => {
   const [companies, setCompanies] = useState([]);
   const [clickCounterObj, setClickCounterObj] = useState({

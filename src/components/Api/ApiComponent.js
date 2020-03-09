@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Api from '../../class/Api';
 
+/**
+ * Component that init on load. Cares that all data is loaded from api before table rendered.
+ *
+ * @param params
+ */
 export default function ApiComponent(params) {
   const api = new Api();
 
   useEffect(() => {
+    /**
+     * Function to get basic array of companies. Checks for old data saved to session storage thats not older than 10 minutes.
+     */
     const getCompanies = async () => {
       let tempCompanies = sessionStorage.getItem('companies');
       if (tempCompanies) {
@@ -26,6 +34,13 @@ export default function ApiComponent(params) {
       await updateCompaniesIncomes(companies);
     };
 
+    /**
+     * Function to merge basic companies with they're incomes. On the basis of incomes
+     * it computes total income sum, last month sum and average of total income.
+     * Cache data in session storage.
+     *
+     * @param companies
+     */
     const updateCompaniesIncomes = async (companies) => {
       if (!companies.length) {
         params.setCompanies({value: [], timestamp: new Date().getTime()});

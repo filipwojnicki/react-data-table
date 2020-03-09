@@ -7,6 +7,9 @@ import Table from './components/Table/Table';
 import './main.css';
 import * as serviceWorker from './serviceWorker';
 
+/**
+ * Main app component.Contains all necessary components.
+ */
 export default function App() {
   const [companies, setCompanies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
